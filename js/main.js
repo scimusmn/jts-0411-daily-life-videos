@@ -1,58 +1,90 @@
 $(document).ready( function(){
 
+    var videoPlayer = {};
+    var screensaver = {};
 
 	function initialize() {
 
-		//Set up language toggle
-    	$( ".video-button" ).on( "click", function(){
-
-    		//Launch fullscreen video player
-    		var src = $(this).attr('data-video-src');
-    		showFullscreenVideo(src);
-
-    	});
-
-    	//Position buttons in grid
-    	var l=0;
-    	var t=0;
-    	$("#selection_screen").children('div').each(function(index) {
-
-    		$(this).css('left', l);
-    		$(this).css('top', t);
-
-    		l += 635;
-
-    		if ( (index+1) % 3 == 0){
-    			t+=357;
-    			l=0;
-    		}
-
-    	});
-
+        setupFullscreenVideo();
+        setupThumbGrid();
+        setupScreenSaver();
 
 	}
 
-	function setupVideoPlayer(){
-		//Create video tag
-        var videoTag = '<video id="screensaver_video" style="position:fixed; top:0px; left:0px; z-index:999;" class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+videoSrc+'" type="video/mp4" /></video>';
-        var videoOptions = { "controls": false, "autoplay": false, "loop": "true", "preload": "auto" };
+    function setupThumbGrid(){
 
-        //Append to html
-        $('body').append( videoTag );
+        //Attach click listeners
+        $( ".video-button" ).on( "click", function(){
+
+            //Launch fullscreen video player
+            var src = $(this).attr('data-video');
+            showFullscreenVideo(src);
+
+        });
+
+    }
+
+	function setupFullscreenVideo(){
+
+		//Create video tag
+        var options = { "controls": false, "autoplay": true, "loop": false, "preload": "auto" };
 
         //Initialize player
-        this.videoPlayer = videojs("screensaver_video", videoOptions, function() {
+        videoPlayer = videojs("fullscreen_video", options, function() {
+
             // Player (this) is initialized and ready.
+
+            this.on("playing", function(){
+
+                $("#player_screen").show();
+
+            });
+
+            this.on("waiting", function(){
+
+                console.log("Video waiting.");
+
+            });
+
+            this.on("ended", function(){
+
+                hideFullscreenVideo();
+
+            });
+
         });
+
+        //Home button
+        $( ".home-btn" ).on( "click", function(){
+
+            hideFullscreenVideo();
+
+        });
+
 	}
 
-	function showFullscreenVideo(src) {
+	function showFullscreenVideo(vidSrc) {
 
-		console.log('showFullscreenVideo ',src);
-
-
+        videoPlayer.src([{ type: "video/mp4", src: vidSrc }]);
 
 	}
+
+    function hideFullscreenVideo() {
+
+        //Hide the video
+        $('#player_screen').fadeOut('fast', function() {
+            videoPlayer.pause();
+            $("#player_screen").hide();
+        });
+
+    }
+
+    function setupScreenSaver(){
+
+        //5 minute screensaver timeout (one minutue more than longest video)
+        screensaver = new Screensaver( (5*60), 'videos/Screensaver.mp4');
+
+    }
 
 	initialize();
 
