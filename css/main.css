@@ -113,8 +113,8 @@ body {
   -ms-user-select: none;
   user-select: none;
 
-  /* disable I-beam cursor over text */
-  cursor: default;
+  /* hide cursor */
+  cursor: none !important;
 
   width: 1080px;
   height: 1920px;
@@ -136,8 +136,9 @@ body {
   height: 100%;
 }
 
-#player_screen{
-
+/* Prevent image ghost-dragging */
+img {
+  pointer-events:none;
 }
 
 /*Rows*/
@@ -163,28 +164,6 @@ body {
 
 #fullscreen_video {
   position: absolute;
-}
-
-/*Fonts*/
-p, h3, h2, h1, span {
-
-}
-h1 {
-
-}
-h2 {
-
-}
-h3 {
-
-}
-p {
-
-}
-
-/* Buttons */
-[data-role="button"] {
-  cursor: pointer;
 }
 
 .poster {
