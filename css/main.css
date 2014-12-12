@@ -153,13 +153,13 @@ img {
 }
 /*Columns*/
 #selection_screen .poster:nth-child(3n-2){
-  left: 0px;
+  left: 3px;
 }
 #selection_screen .poster:nth-child(3n-1){
   left: 643px;
 }
 #selection_screen .poster:nth-child(3n){
-  left: 1286px;
+  left: 1283px;
 }
 
 #fullscreen_video {
