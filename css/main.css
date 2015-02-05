@@ -149,8 +149,9 @@ img {
   top: 362px;
 }
 #selection_screen .poster:nth-child(n+7){
-  top: 724px;
+  top: 724px !important;
 }
+
 /*Columns*/
 #selection_screen .poster:nth-child(3n-2){
   left: 3px;
